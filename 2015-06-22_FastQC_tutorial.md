@@ -1,7 +1,7 @@
 #Assessing the quality of raw amplicon sequencing data
-Authored by Siobhan Cusack, with contributions from Ashley Shade and Jackson Sorensen for EDAMAME2015     
+Authored by Siobhan Cusack, with contributions from Ashley Shade and Jackson Sorensen for EDAMAME2016     
 
-[EDAMAME-2015 wiki](https://github.com/edamame-course/2015-tutorials/wiki)
+[EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
 
 ***
 EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-tutorials/blob/master/LICENSE.md). _Share, adapt, and attribute please!_
