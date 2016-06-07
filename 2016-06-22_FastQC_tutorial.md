@@ -22,7 +22,7 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 
 ####Information in this tutorial is based on the FastQC manual which can be accessed [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/).
 
-FastQC is a relatively quick and non labor-intesive way to check the quality of your NGS data.  Before we go into that, we're going to actually look at the raw data.
+FastQC is a relatively quick and non labor-intesive way to check the quality of your NGS data.  But first, we're going to actually look at the raw data.
 
 Connect to the QIIME 1.9.1 AMI, and if you haven't done so already, download the data from the cloud.
 
@@ -39,7 +39,7 @@ Each fastq has four lines:
 * 1. name (header - includes sequencer, spot coordinates, flow cell, etc...)   
 * 2. actual sequence data   
 * 3. spacer (starts with +)   
-* 4. Quality: q score - alpha numeric (I is a score of 40, which is a perfect score) see [Wikipedia link](http://en.wikipedia.org/wiki/FASTQ_format) (no kidding!) for interpretation of alphanumeric Q score.
+* 4. Quality: q score - alphanumeric (I is a score of 40, which is a perfect score) see [Wikipedia link](http://en.wikipedia.org/wiki/FASTQ_format) (no kidding!) for interpretation of alphanumeric Q score.
 
 Can you identify each of the above components in the first fastq file?
 
@@ -48,12 +48,12 @@ A good sequencing center should return some information on how the sequencing we
 Moving on to FastQC. Install FastQC from the home directory.
 ```
 cd 
-wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.3.zip
+wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.5.zip
 ```
 This will download a .zip file into the home directory. Let's unzip it.
 
 ```
-unzip fastqc_v0.11.3.zip
+unzip fastqc_v0.11.5.zip
 ```
 This will create a new directory called FastQC with all of the program files in it. We need to change the permissions on the executable file in order to run the program.
 
