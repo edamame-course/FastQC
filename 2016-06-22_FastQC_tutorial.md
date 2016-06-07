@@ -16,6 +16,7 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 * Understand the information provided in Illumina "raw" fastq files
 * Install auxiliary software on a QIIME EC2 instance
 * Use FastQC to assess the overall quality of raw sequencing data, and determine the parameters that are important specifically to metagenomes
+* Understand how to write and execute a shell script
 
 ***
 
