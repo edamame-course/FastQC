@@ -69,52 +69,54 @@ You should now see a lot of files and new directories. "fastqc" will be in white
 chmod 755 fastqc
 ls
 ```
-"fastqc" should now be in green. Now we can execute it! 
+"fastqc" should now be in green, indicating that it is executable. 
 (If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".) 
 
-We will need to copy our .fastq files into the directory containing the fastqc executable.
-```
-do that here
-```
-Now we are going to use what is called a shell script to automate the FastQC workflow, rather than running the same commands over and over for thousands of sequences files. 
+Now we are going to use what is called a shell script to automate the FastQC workflow, rather than manually running the same commands over and over for each sequence file. This is a simple script, but it can be modified for more complex workflows. Knowing how to do this will save you a lot of time!
 
-First we will make a new file
+First we will make a new file:
 ```
 nano FastQC.sh
 ```
 Now copy and paste the following code into the FastQC.sh file:
 ```
-cd ~/dc_workshop/data/untrimmed_fastq/   
+cd ~/EDAMAME_16S/Fastq
 
-echo "Running fastqc..." 
-~/FastQC/fastqc *.fastq   
-mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads   
-
-echo "saving..."   
-mv *.zip ~/dc_workshop/results/fastqc_untrimmed_reads/    
-mv *.html ~/dc_workshop/results/fastqc_untrimmed_reads/   
-
-cd ~/dc_workshop/results/fastqc_untrimmed_reads/
-
-echo "Unzipping..."   
-for zip in *.zip   
-do   
-  unzip $zip   
-done   
+echo "Running fastqc..."
+~/FastQC/fastqc *.fastq
+mkdir -p ~/EDAMAME_16S/results/fastqc
 
 echo "saving..."
-cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
+mv *.zip ~/EDAMAME_16S/results/fastqc/
+mv *.html ~/EDAMAME_16S/results/fastqc/
+
+cd ~/EDAMAME_16S/results/fastqc/
+
+echo "Unzipping..."
+for zip in *.zip
+do
+  unzip $zip
+done
+
+echo "saving..."
+cat */summary.txt > ~/EDAMAME_16S/results/fastqc_summaries.txt
 ```
 Exit and save the new file. We will have to change the permissions on this file as well so that we can run it. Then we can execute the file to run the now-automated workflow!
 ```
 chmod 777 FastQC.sh
 bash FastQC.sh
 ```
-Running the workflow will create two new files with the same name as each of the original .fastq sequence files, with the extensions `.fastqc.zip` and `fastqc.html`. As you may be able to guess, these are processed files in zip and html format.
+Once this script finishes, let's navigate to the new results folder and investigate the output.
+
+```
+cd ../EDAMAME_16S/results/fastqc
+ls
+```
+Here you will see that for each original fastq file, there is a directory of the same name, as well as two new files with the same name as each of the original .fastq sequence files, with the extensions `.fastqc.zip` and `fastqc.html`. Let's take a look at one of the html files to see what the FastQC output looks like. 
 
 Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file to your desktop. Then, double-click on the file and it should open in your browser.
 ```
-scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/FastQC/forward_fastqc.zip ~/Desktop
+scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/EDAMAME_16S/results/fastqc/C01D01F_sub_fastqc.html ~/Desktop
 ```
 
 On the left-hand side of the screen, there will be a summary of the analyses with some combination of green checkmarks, yellow exclamation points, and red Xs, depending on whether or not the sequences pass the quality check for each module.
