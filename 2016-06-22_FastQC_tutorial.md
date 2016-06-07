@@ -67,6 +67,7 @@ chmod 755 fastqc
 ls
 ```
 "fastqc" should now be in green. Now we can execute it! 
+If you're interested in the specifics of file permissions, there is a 10 second crash course (here)[https://files.fosswire.com/2007/08/fwunixref.pdf] under the heading "File Permissions". 
 
 We need to copy a .fastq file into this folder in order to run the program. Although we can use any fastq file, it will be more of a summary (and less time consuming) if we can consider a group of fastq together.  To do this, we'll create a new file, which we will call "forward.fastq", which will be a file containing all forward reads from our 16S tag sequencing. To make this file, navigate to the folder containing all of the subsampled data .fastq files.
 
