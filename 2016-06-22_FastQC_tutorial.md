@@ -1,5 +1,6 @@
 #Assessing the quality of raw amplicon sequencing data
-Authored by Siobhan Cusack, with contributions from Ashley Shade and Jackson Sorensen for EDAMAME2016     
+Authored by Siobhan Cusack, with contributions from Ashley Shade and Jackson Sorensen for EDAMAME2016
+Shell script from [Data Carpentry](http://www.datacarpentry.org/2015-08-24-ISU/lessons/08-automating_a_workflow.html)
 
 [EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
 
@@ -67,22 +68,47 @@ chmod 755 fastqc
 ls
 ```
 "fastqc" should now be in green. Now we can execute it! 
-If you're interested in the specifics of file permissions, there is a 10 second crash course (here)[https://files.fosswire.com/2007/08/fwunixref.pdf] under the heading "File Permissions". 
+(If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".) 
 
-We need to copy a .fastq file into this folder in order to run the program. Although we can use any fastq file, it will be more of a summary (and less time consuming) if we can consider a group of fastq together.  To do this, we'll create a new file, which we will call "forward.fastq", which will be a file containing all forward reads from our 16S tag sequencing. To make this file, navigate to the folder containing all of the subsampled data .fastq files.
+We will need to copy our .fastq files into the directory containing the fastqc executable.
+```
+do that here
+```
+Now we are going to use what is called a shell script to automate the FastQC workflow, rather than running the same commands over and over for thousands of sequences files. 
 
+First we will make a new file
 ```
-cat *F_sub.fastq > forward.fastq
+nano FastQC.sh
 ```
-This concatenates all of the files ending in "F_sub.fastq", for "forward reads", into one big file.
-Once we have copied it into the FastQC folder, we will run the program.
+Now copy and paste the following code into the FastQC.sh file:
+```
+cd ~/dc_workshop/data/untrimmed_fastq/   
 
-```
-mv forward.fastq ~/FastQC/
-./fastqc forward.fastq
+echo "Running fastqc..." 
+~/FastQC/fastqc *.fastq   
+mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads   
 
+echo "saving..."   
+mv *.zip ~/dc_workshop/results/fastqc_untrimmed_reads/    
+mv *.html ~/dc_workshop/results/fastqc_untrimmed_reads/   
+
+cd ~/dc_workshop/results/fastqc_untrimmed_reads/
+
+echo "Unzipping..."   
+for zip in *.zip   
+do   
+  unzip $zip   
+done   
+
+echo "saving..."
+cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 ```
-This will create two new files with the same name and the extensions `.fastqc.zip` and `fastqc.html`. As you may be able to guess, these are processed files in zip and html format.
+Exit and save the new file. We will have to change the permissions on this file as well so that we can run it. Then we can execute the file to run the now-automated workflow!
+```
+chmod 777 FastQC.sh
+bash FastQC.sh
+```
+Running the workflow will create two new files with the same name as each of the original .fastq sequence files, with the extensions `.fastqc.zip` and `fastqc.html`. As you may be able to guess, these are processed files in zip and html format.
 
 Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file to your desktop. Then, double-click on the file and it should open in your browser.
 ```
@@ -90,7 +116,6 @@ scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/
 ```
 
 On the left-hand side of the screen, there will be a summary of the analyses with some combination of green checkmarks, yellow exclamation points, and red Xs, depending on whether or not the sequences pass the quality check for each module.
-
 
 ###1: Basic Statistics
 ![basic statistics](../img/basic_statistics.jpg)
