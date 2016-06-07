@@ -1,6 +1,7 @@
 #Assessing the quality of raw amplicon sequencing data
-Authored by Siobhan Cusack, with contributions from Ashley Shade and Jackson Sorensen for EDAMAME2016
-Shell script from [Data Carpentry](http://www.datacarpentry.org/2015-08-24-ISU/lessons/08-automating_a_workflow.html)
+Authored by Siobhan Cusack, with contributions from Ashley Shade and Jackson Sorensen for EDAMAME2016.
+
+The shell script for automating the workflow is from [Data Carpentry](http://www.datacarpentry.org/2015-08-24-ISU/lessons/08-automating_a_workflow.html)
 
 [EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
 
