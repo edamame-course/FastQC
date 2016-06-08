@@ -112,9 +112,14 @@ Once this script finishes, let's navigate to the new results folder and investig
 cd ../EDAMAME_16S/results/fastqc
 ls
 ```
-Here you will see that for each original fastq file, there is a directory of the same name, as well as two new files with the same name as each of the original .fastq sequence files, with the extensions `.fastqc.zip` and `fastqc.html`. Let's take a look at one of the html files to see what the FastQC output looks like. 
+Here you will see that for each original fastq file, there are two new files with the extensions `.fastqc.zip` and `fastqc.html`. Our shell script included a step to unzip all of the .zip files, which is why we also have a new directory with the same name as each fastq file. These directories contain the output of the quality checking, including a full report (fastqc_data.txt) and a shorter summary (summary.txt). Since our shell script also included a step to combine each individual summary into one big summary file, we can view a summary of the results for each sequencing file that way.
+```
+cd ~/EDAMAME_16S/results
+more fastqc_summaries.txt
+```
+This will show a summary of each quality checking module in the middle column, whether the file passed or failed this check in the left column, and the sequencing file name in the right column. This is useful to quickly check on the results of many files at once. But since this is just a summary, there is still much more information to be gleaned from the results. Let's take a look at one of the html files to see what the full FastQC output looks like. 
 
-Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file to your desktop. Then, double-click on the file and it should open in your browser.
+Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file from the first sequencing file to your desktop. Then, double-click on the file and it should open in your browser.
 ```
 scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/EDAMAME_16S/results/fastqc/C01D01F_sub_fastqc.html ~/Desktop
 ```
@@ -124,7 +129,7 @@ On the left-hand side of the screen, there will be a summary of the analyses wit
 ###1: Basic Statistics
 ![basic statistics](/img/basic_statistics.png)
 
-Basic statistics displays a chart containing information about your file, including the name, how many reads were analyzed, and whether or not any of the reads were flagged for poor quality. In this case, we had 540,000 sequences. None of them were flagged as poor quality. The average sequence length was 150 bases, with 54% GC content.
+Basic statistics displays a chart containing information about your file, including the name, how many reads were analyzed, and whether or not any of the reads were flagged for poor quality. In this case, we had 10,000 sequences. None of them were flagged as poor quality. The average sequence length was 150 bases, with 51% GC content.
 
 ###2: Per base sequence quality
 ![per base sequence quality](/img/per_base_seq_qual.png)
@@ -134,7 +139,7 @@ Per base sequence quality shows the quality of each sequence at every position f
 ###3: Per tile sequence quality
 ![per tile sequence quality](/img/per_tile_seq_quality.png)
 
-Per tile sequence quality is a heatmap display of the flow cell quality by individual tiles. If the figure is a solid bright blue, the flow cell tile quality was consistently great! If there are patches of lighter blue or any other color, there was a problem associated with one of the tiles (such as a bubble or smudge) and this may correspond with a decrease in sequence quality in those regions. Above you can see light blue patches which indicate potential problems with the sequencing lane. However, in this case it is still good enough to pass the quality check; this would be more concerning if we had orange or red tiles.
+Per tile sequence quality is a heatmap display of the flow cell quality by individual tiles. If the figure is a solid bright blue, the flow cell tile quality was consistently great! If there are patches of lighter blue or any other color, there was a problem associated with one of the tiles (such as a bubble or smudge) and this may correspond with a decrease in sequence quality in those regions. Above you can see some light blue, green, and yellow patches, as well as one orange square, which all indicate potential problems with the sequencing lane. The presence of so many green to orange squares has resulted in a warning for this module. It would be more concerning if we had more orange or red tiles, but we should keep this warning in mind and trim sequences appropriately.
 
 ###4: Per sequence quality scores
 ![per sequence quality scores](/img/per_seq_qual.png)
