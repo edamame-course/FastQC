@@ -1,7 +1,7 @@
 #Assessing the quality of raw amplicon sequencing data
 Authored by Siobhan Cusack, with contributions from Ashley Shade and Jackson Sorensen for EDAMAME2016.
 
-Shell script for automating this workflow is from [Data Carpentry](http://www.datacarpentry.org/2015-08-24-ISU/lessons/08-automating_a_workflow.html)
+**The shell script included in this tutorial is from [Data Carpentry](http://www.datacarpentry.org/2015-08-24-ISU/lessons/08-automating_a_workflow.html)**
 
 [EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
 
@@ -112,7 +112,8 @@ Once this script finishes, let's navigate to the new results folder and investig
 cd ../EDAMAME_16S/results/fastqc
 ls
 ```
-Here you will see that for each original fastq file, there are two new files with the extensions `.fastqc.zip` and `fastqc.html`. Our shell script included a step to unzip all of the .zip files, which is why we also have a new directory with the same name as each fastq file. These directories contain the output of the quality checking, including a full report (fastqc_data.txt) and a shorter summary (summary.txt). Since our shell script also included a step to combine each individual summary into one big summary file, we can view a summary of the results for each sequencing file that way.
+Here you will see that for each original fastq file, there are two new files with the extensions `.fastqc.zip` and `fastqc.html`. Our shell script included a step to unzip all of the .zip files, which is why we also have a new directory with the same name as each fastq file. These directories contain the output of the quality checking, including a full report (fastqc_data.txt) and a shorter summary (summary.txt). Since our shell script also included a step to combine each individual summary into one big summary file, we can view a combined summary of the results that way.
+
 ```
 cd ~/EDAMAME_16S/results
 more fastqc_summaries.txt
@@ -145,7 +146,9 @@ Per tile sequence quality is a heatmap display of the flow cell quality by indiv
 ![per sequence quality scores](/img/per_seq_qual.png)
 
 Per sequence quality scores represent the quality of each read. The y-axis is number of sequences, and the x-axis uses Phred scores, which are based on a logarithmic scale. A Phred score of 30 indicates an error rate of 1 base in 1000, or an accuracy of 99.9%, while a Phred score of 40 indicates an error rate of 1 base in 10,000, or an accuracy of 99.99%. Sequences will yield a warning for this module if there is an error rate of 0.2% or higher (Phred score below 27). Sequences will fail this quality check if they have an error rate of 1% or higher (Phred score below 20.)
-In our example, the average quality per read is 37, which is very good.
+In our example, the average quality per read is 37, which is very good. This represents an accuracy of 99.98%. 
+For the more visual learners among us, here is a graph demonstrating the relationship between Phred scores and error rate.
+![phred scores](/img/phred_scores.png)
 
 ###5: Per base sequence content
 ![per base sequence content](/img/per_base_seq_content.png)
