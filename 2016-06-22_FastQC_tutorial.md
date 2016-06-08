@@ -122,7 +122,7 @@ scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/
 On the left-hand side of the screen, there will be a summary of the analyses with some combination of green checkmarks, yellow exclamation points, and red Xs, depending on whether or not the sequences pass the quality check for each module.
 
 ###1: Basic Statistics
-![basic statistics](../img/basic_statistics.jpg)
+![basic statistics](/img/basic_statistics.png)
 
 Basic statistics displays a chart containing information about your file, including the name, how many reads were analyzed, and whether or not any of the reads were flagged for poor quality. In this case, we had 540,000 sequences. None of them were flagged as poor quality. The average sequence length was 150 bases, with 54% GC content.
 
