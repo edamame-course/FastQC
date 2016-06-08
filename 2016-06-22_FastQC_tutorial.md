@@ -72,7 +72,7 @@ ls
 "fastqc" should now be in green, indicating that it is executable. 
 (If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".) 
 
-Now we are going to use what is called a shell script to automate the FastQC workflow, rather than manually running the same commands over and over for each sequence file. This is a simple script, but it can be modified for more complex workflows. Knowing how to do this will save you a lot of time!
+Now we are going to use what is called a shell script to automate the FastQC workflow, rather than manually running the same commands over and over for each sequence file. This is a simple script, but it can be modified for more complex workflows. Shell scripts can save you a lot of time!
 
 First we will make a new file:
 ```
