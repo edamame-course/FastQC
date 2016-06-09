@@ -27,7 +27,7 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 
 FastQC is a relatively quick and non labor-intesive way to check the quality of your NGS data.  But first, we're going to actually look at the raw data.
 
-Connect to the QIIME 1.9.1 AMI, and if you haven't done so already, download the data from the cloud (```wget https://s3.amazonaws.com/edamame/EDAMAME_16S.tar.gz```)
+Connect to the QIIME 1.9.1 AMI (AMI ID= ami-1918ff72), and if you haven't done so already, download the data from the cloud (```wget https://s3.amazonaws.com/edamame/EDAMAME_16S.tar.gz```)
 
 Before starting, make sure the sequencing files (in the 16S "subsampled" directory) have the .fastq extension.
 
