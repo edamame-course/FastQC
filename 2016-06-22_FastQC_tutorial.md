@@ -190,7 +190,7 @@ This module searches for specific adapter sequences. A sequence that makes up mo
 
 
 ###12: Kmer content
-![kmer_content](/img/kmer_content.png)
+![kmer_content](/img/Kmer_content.png)
 
 
 In a completely random library, any kmers would be expected to be seen about equally in each position (from 1-150 in this case). Any kmers that are specifically enriched at a particular site are reported in this module. If a kmer is enriched at a specific site with a p-value of less than 0.01, a warning will be displayed. A failure for this module occurs if a kmer is enriched at a site with a p-value of less than 10^-5.
