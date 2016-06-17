@@ -129,22 +129,23 @@ Basic statistics displays a chart containing information about your file, includ
 ###2: Per base sequence quality
 ![per base sequence quality](/img/per_base_seq_qual.png)
 
-Per base sequence quality shows the quality of the sequences in your file at every base position from 1 to, in our case, 150. The quality score is a Phred score, which is explained below. The per base sequence quality plot displays this information using box and whisker plots to give a sense of how much variation there was among the reads. Ideally we would want the entire plot to be contained within the green region; this would be considered very good quality. While having part of the plot in the orange or red regions is not preferable, sequences can still pass the quality check if this is the case, as in our example. When the lower quartile for any position is less than 10 or the median is less than 25, the module will give a warning. When the lower quartile for any position is less than 5 or the median is less than 20, the sequence will fail this quality check.
-
-[**PHRED SCORES**](https://en.wikipedia.org/wiki/Phred_quality_score): Phred scores are a shorthand denotation of sequence quality. The scale is logarithmic and spans values 1-40. The maximum Phred score of 40 indicates an error rate of 1 base in 10,000, or an accuracy of 99.99%. A Phred score of 30 indicates an error rate of 1 base in 1000, or an accuracy of 99.9%. 
+First, a word about the y-axis units: In this graph, as in many others to follow, sequence quality is denoted as a [Phred score](https://en.wikipedia.org/wiki/Phred_quality_score). The scale is logarithmic and spans values 0-40. The maximum Phred score of 40 indicates an error rate of 1 base in 10,000, or an accuracy of 99.99%. A Phred score of 30 indicates an error rate of 1 base in 1000, or an accuracy of 99.9%. 
 For the more visual learners among us, here is a graph demonstrating the relationship between Phred scores and error rate.
 ![phred scores](/img/phred_scores.png)
+
+Per base sequence quality shows the quality of the sequences in your file at every base position. In our case, this is from 1 to 150. This module displays the information using box and whisker plots to give a sense of how much variation there was among the reads. Ideally we would want the entire plot to be contained within the green region; this would be considered very good quality. While having part of the plot in the orange or red regions is not preferable, sequences can still pass the quality check if this is the case, as in our example. When the lower quartile for any position is less than 10 or the median is less than 25, the module will give a warning. When the lower quartile for any position is less than 5 or the median is less than 20, the sequence will fail this quality check.
+
 
 ###3: Per tile sequence quality
 ![per tile sequence quality](/img/per_tile_seq_quality.png)
 
-Per tile sequence quality is a heatmap display of the flow cell quality by individual tiles. If the figure is a solid bright blue, the flow cell tile quality was consistently great! If there are patches of lighter blue or any other color, there was a problem associated with one of the tiles (such as a bubble or smudge) and this may correspond with a decrease in sequence quality in those regions. Above you can see some light blue, green, and yellow patches, as well as one orange square, which all indicate potential problems with the sequencing lane. The presence of so many green to orange squares has resulted in a warning for this module. It would be more concerning if we had more orange or red tiles, but we should keep this warning in mind and trim sequences appropriately.
+Per tile sequence quality is a heatmap display of the flow cell quality by individual tiles. If the figure is a solid bright blue, the flow cell tile quality was consistently great! If there are patches of lighter blue or any other color, there was a problem associated with one of the tiles (such as a bubble or smudge) and this may correspond with a decrease in sequence quality in those regions. Above you can see some light blue, green, and yellow patches, as well as one orange square, which all indicate potential problems with the sequencing lane. The presence of so many green to orange squares has resulted in a warning for this module. It would be more concerning if we had more orange or any red tiles. 
 
 ###4: Per sequence quality scores
 ![per sequence quality scores](/img/per_seq_qual.png)
 
 Per sequence quality scores represent the quality of each read. The y-axis is number of sequences, and the x-axis uses Phred scores as described in section 2. Sequences will yield a warning for this module if there is an error rate of 0.2% or higher (Phred score below 27). Sequences will fail this quality check if they have an error rate of 1% or higher (Phred score below 20.)
-In our example, the average quality per read is 37, which is very good. This represents an accuracy of 99.98%. 
+In our example, the average quality per read is 37, which is very good; this represents an accuracy of 99.98%. 
 
 ###5: Per base sequence content
 ![per base sequence content](/img/per_base_seq_content.png)
