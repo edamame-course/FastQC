@@ -1,7 +1,7 @@
 #Assessing the quality of raw amplicon sequencing data
 Authored by Siobhan Cusack, with contributions from Ashley Shade and Jackson Sorensen for EDAMAME2016.
 
-Shell script for automating this workflow is from [Data Carpentry](http://www.datacarpentry.org/2015-08-24-ISU/lessons/08-automating_a_workflow.html)
+**The shell script included in this tutorial is from [Data Carpentry](http://www.datacarpentry.org/2015-08-24-ISU/lessons/08-automating_a_workflow.html)**
 
 [EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
 
@@ -27,7 +27,7 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 
 FastQC is a relatively quick and non labor-intesive way to check the quality of your NGS data.  But first, we're going to actually look at the raw data.
 
-Connect to the QIIME 1.9.1 AMI, and if you haven't done so already, download the data from the cloud (```wget https://s3.amazonaws.com/edamame/EDAMAME_16S.tar.gz```)
+Connect to the QIIME 1.9.1 AMI (AMI ID= ami-1918ff72), and if you haven't done so already, download the data from the cloud (```wget https://s3.amazonaws.com/edamame/EDAMAME_16S.tar.gz```)
 
 Before starting, make sure the sequencing files (in the 16S "subsampled" directory) have the .fastq extension.
 
@@ -62,15 +62,9 @@ This will create a new directory called FastQC with all of the program files in 
 
 ```
 cd FastQC
-ls
-```
-You should now see a lot of files and new directories. "fastqc" will be in white, meaning we cannot execute the file.
-```
 chmod 755 fastqc
-ls
 ```
-"fastqc" should now be in green, indicating that it is executable. 
-(If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".) 
+This has changed the permission so we can now execute the file. If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".
 
 Now we are going to use what is called a shell script to automate the FastQC workflow, rather than manually running the same commands over and over for each sequence file. This is a simple script, but it can be modified for more complex workflows. Shell scripts can save you a lot of time!
 
@@ -103,7 +97,7 @@ cat */summary.txt > ~/EDAMAME_16S/results/fastqc_summaries.txt
 ```
 Exit and save the new file. We will have to change the permissions on this file as well so that we can run it. Then we can execute the file to run the now-automated workflow!
 ```
-chmod 777 FastQC.sh
+chmod 755 FastQC.sh
 bash FastQC.sh
 ```
 Once this script finishes, let's navigate to the new results folder and investigate the output.
@@ -112,7 +106,8 @@ Once this script finishes, let's navigate to the new results folder and investig
 cd ../EDAMAME_16S/results/fastqc
 ls
 ```
-Here you will see that for each original fastq file, there are two new files with the extensions `.fastqc.zip` and `fastqc.html`. Our shell script included a step to unzip all of the .zip files, which is why we also have a new directory with the same name as each fastq file. These directories contain the output of the quality checking, including a full report (fastqc_data.txt) and a shorter summary (summary.txt). Since our shell script also included a step to combine each individual summary into one big summary file, we can view a summary of the results for each sequencing file that way.
+Here you will see that for each original fastq file, there are two new files with the extensions `.fastqc.zip` and `fastqc.html`. Our shell script included a step to unzip all of the .zip files, which is why we also have a new directory with the same name as each fastq file. These directories contain the output of the quality checking, including a full report (fastqc_data.txt) and a shorter summary (summary.txt). Since our shell script also included a step to combine each individual summary into one big summary file, we can view a combined summary of the results that way.
+
 ```
 cd ~/EDAMAME_16S/results
 more fastqc_summaries.txt
@@ -134,18 +129,23 @@ Basic statistics displays a chart containing information about your file, includ
 ###2: Per base sequence quality
 ![per base sequence quality](/img/per_base_seq_qual.png)
 
-Per base sequence quality shows the quality of each sequence at every position from 1 to 150, in this case. It displays this information using box and whisker plots to give a sense of how much variation there was among the reads. Ideally we would want the entire plot to be contained within the green region; this would be considered very good quality. While having part of the plot in the orange or red regions is not preferable, sequences can still pass the quality check if this is the case, as in our example. When the lower quartile for any position is less than 10 or the median is less than 25, the module will give a warning. When the lower quartile for any position is less than 5 or the median is less than 20, the sequence will fail this quality check.
+First, a word about the y-axis units: In this graph, as in many others to follow, sequence quality is denoted as a [Phred score](https://en.wikipedia.org/wiki/Phred_quality_score). The scale is logarithmic and spans values 0-40. The maximum Phred score of 40 indicates an error rate of 1 base in 10,000, or an accuracy of 99.99%. A Phred score of 30 indicates an error rate of 1 base in 1000, or an accuracy of 99.9%. 
+For the more visual learners among us, here is a graph demonstrating the relationship between Phred scores and error rate.
+![phred scores](/img/phred_scores.png)
+
+Per base sequence quality shows the quality of the sequences in your file at every base position. In our case, this is from 1 to 150. This module displays the information using box and whisker plots to give a sense of how much variation there was among the reads. Ideally we would want the entire plot to be contained within the green region; this would be considered very good quality. While having part of the plot in the orange or red regions is not preferable, sequences can still pass the quality check if this is the case, as in our example. When the lower quartile for any position is less than 10 or the median is less than 25, the module will give a warning. When the lower quartile for any position is less than 5 or the median is less than 20, the sequence will fail this quality check.
+
 
 ###3: Per tile sequence quality
 ![per tile sequence quality](/img/per_tile_seq_quality.png)
 
-Per tile sequence quality is a heatmap display of the flow cell quality by individual tiles. If the figure is a solid bright blue, the flow cell tile quality was consistently great! If there are patches of lighter blue or any other color, there was a problem associated with one of the tiles (such as a bubble or smudge) and this may correspond with a decrease in sequence quality in those regions. Above you can see some light blue, green, and yellow patches, as well as one orange square, which all indicate potential problems with the sequencing lane. The presence of so many green to orange squares has resulted in a warning for this module. It would be more concerning if we had more orange or red tiles, but we should keep this warning in mind and trim sequences appropriately.
+Per tile sequence quality is a heatmap display of the flow cell quality by individual tiles. If the figure is a solid bright blue, the flow cell tile quality was consistently great! If there are patches of lighter blue or any other color, there was a problem associated with one of the tiles (such as a bubble or smudge) and this may correspond with a decrease in sequence quality in those regions. Above you can see some light blue, green, and yellow patches, as well as one orange square, which all indicate potential problems with the sequencing lane. The presence of so many green to orange squares has resulted in a warning for this module. It would be more concerning if we had more orange or any red tiles. 
 
 ###4: Per sequence quality scores
 ![per sequence quality scores](/img/per_seq_qual.png)
 
-Per sequence quality scores represent the quality of each read. The y-axis is number of sequences, and the x-axis uses Phred scores, which are based on a logarithmic scale. A Phred score of 30 indicates an error rate of 1 base in 1000, or an accuracy of 99.9%, while a Phred score of 40 indicates an error rate of 1 base in 10,000, or an accuracy of 99.99%. Sequences will yield a warning for this module if there is an error rate of 0.2% or higher (Phred score below 27). Sequences will fail this quality check if they have an error rate of 1% or higher (Phred score below 20.)
-In our example, the average quality per read is 37, which is very good.
+Per sequence quality scores represent the quality of each read. The y-axis is number of sequences, and the x-axis uses Phred scores as described in section 2. Sequences will yield a warning for this module if there is an error rate of 0.2% or higher (Phred score below 27). Sequences will fail this quality check if they have an error rate of 1% or higher (Phred score below 20.)
+In our example, the average quality per read is 37, which is very good; this represents an accuracy of 99.98%. 
 
 ###5: Per base sequence content
 ![per base sequence content](/img/per_base_seq_content.png)
@@ -155,9 +155,8 @@ Per base sequence content shows, for each position of each sequence, the base co
 ###6: Per sequence GC content
 ![per sequence GC content](/img/per_seq_GC_content.png)
 
-Per sequence GC content displays the GC content for all reads along with the "theoretical distribution" of GCs. The peak of the red line corresponds to the mean GC content for the sequences, while the peak of the blue line corresponds to the theoretical mean GC content. Your GC content should be normally distributed; shifts in the peak are to be expected since GC content varies between organisms, but anything other than a normal curve might be indicative of contamination. The sharp peak seen above is again due to the fact that we have enriched for a specific sequence, so we expect the majority to have about the same GC content.
-
-A warning is raised if sequences outside of the normal distribution comprise more than 15% of the total. A sample will fail if more than 20% of sequences are outside the normal distribution. Failures are usually due to contamination, frequently by adapter sequences.
+Per sequence GC content displays the GC content for all reads along with the "theoretical distribution" of GCs. The peak of the red line corresponds to the mean GC content for the sequences, while the peak of the blue line corresponds to the theoretical mean GC content. Your GC content should be normally distributed; shifts in the peak are to be expected since GC content varies between organisms, but anything other than a normal curve might be indicative of contamination. The sharp peak seen above is again due to the fact that we have enriched for a specific sequence, so we expect the majority to have about the same GC content. 
+A warning is raised if sequences outside of the normal distribution comprise more than 15% of the total. A sample will fail if more than 20% of sequences are outside the normal distribution. Failures are usually due to contamination (frequently by adapter sequences), or to the use of amplicons as we have done here. 
 
 ###7: Per base N content
 ![per base N content](/img/per_base_N_content.png)
@@ -180,7 +179,7 @@ The sequence duplication levels plot shows the number of times a sequence is dup
 If a certain sequence is calculated to represent more than 0.1% of the entire genome, it will be flagged as an overrepresented sequence and yield a warning for this module. The presence of sequences that represent more than 1% of the whole genome will result in a failure, as seen above.
 These overrepresented sequences are seen because we are looking at 16S data; if we did not see this many overrepresented sequences, there would be a serious problem. Another frequent source of "overrepresented sequences" is Illumina adapters, which is why it's a good idea to trim sequences before running FastQC.
 
-The program searches for possible matches to identified overrepresented sequences; although this search frequently returns "no hit", it is usually quite easy to identify the overrepresented sequences by doing a BLAST search.
+The program searches for possible matches to identified overrepresented sequences; although this search frequently returns "no hit" (as seen in our example), it is usually quite easy to identify the overrepresented sequences by doing a BLAST search.
 
 
 ###11: Adapter content
@@ -190,7 +189,7 @@ This module searches for specific adapter sequences. A sequence that makes up mo
 
 
 ###12: Kmer content
-![kmer content](/img/kmer_content.png)
+![kmer_content](/img/Kmer_content.png)
 
 
 In a completely random library, any kmers would be expected to be seen about equally in each position (from 1-150 in this case). Any kmers that are specifically enriched at a particular site are reported in this module. If a kmer is enriched at a specific site with a p-value of less than 0.01, a warning will be displayed. A failure for this module occurs if a kmer is enriched at a site with a p-value of less than 10^-5.
@@ -198,7 +197,7 @@ We have failed this module, again due to the fact that we are using 16S sequence
 In non-enriched reads, it is relatively common to see highly represented kmers near the beginning of a sequence if adapters are present.
 
 
-###For FastQC questions, check the [documentation](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/). Happy quality checking!
+###For additional FastQC questions, check the [documentation](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/). Happy quality checking!
 
 ***
 ##Help and other Resources
