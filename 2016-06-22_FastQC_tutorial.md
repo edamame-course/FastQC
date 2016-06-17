@@ -48,6 +48,8 @@ Can you identify each of the above components in the first fastq file?
 
 A good sequencing center should return some information on how the sequencing went and the proprietary software they used to do some initial quality control of the raw data, and, potentially, information about de-multiplexing.  You can look at the info we got from the MSU Genomics Core [here](https://github.com/edamame-course/2015-tutorials/tree/master/demos/QCRawTags).
 
+Use ```q``` to exit from the ```more``` command. 
+
 Moving on to FastQC. Install FastQC from the home directory.
 ```
 cd 
@@ -95,7 +97,7 @@ done
 echo "saving..."
 cat */summary.txt > ~/EDAMAME_16S/results/fastqc_summaries.txt
 ```
-Exit and save the new file. We will have to change the permissions on this file as well so that we can run it. Then we can execute the file to run the now-automated workflow!
+Exit and save the new file. We will have to change the permissions on this file as well so that we can run it. Then we can execute the file to run the now-automated workflow! This should take a couple of minutes at the most to run. 
 ```
 chmod 755 FastQC.sh
 bash FastQC.sh
