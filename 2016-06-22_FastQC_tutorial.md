@@ -62,15 +62,9 @@ This will create a new directory called FastQC with all of the program files in 
 
 ```
 cd FastQC
-ls
-```
-You should now see a lot of files and new directories. "fastqc" will be in white, meaning we cannot execute the file.
-```
 chmod 755 fastqc
-ls
 ```
-"fastqc" should now be in green, indicating that it is executable. 
-(If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".) 
+This has changed the permission so we can now execute the file. If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".
 
 Now we are going to use what is called a shell script to automate the FastQC workflow, rather than manually running the same commands over and over for each sequence file. This is a simple script, but it can be modified for more complex workflows. Shell scripts can save you a lot of time!
 
@@ -103,7 +97,7 @@ cat */summary.txt > ~/EDAMAME_16S/results/fastqc_summaries.txt
 ```
 Exit and save the new file. We will have to change the permissions on this file as well so that we can run it. Then we can execute the file to run the now-automated workflow!
 ```
-chmod 777 FastQC.sh
+chmod 755 FastQC.sh
 bash FastQC.sh
 ```
 Once this script finishes, let's navigate to the new results folder and investigate the output.
@@ -135,7 +129,12 @@ Basic statistics displays a chart containing information about your file, includ
 ###2: Per base sequence quality
 ![per base sequence quality](/img/per_base_seq_qual.png)
 
-Per base sequence quality shows the quality of each sequence at every position from 1 to 150, in this case. It displays this information using box and whisker plots to give a sense of how much variation there was among the reads. Ideally we would want the entire plot to be contained within the green region; this would be considered very good quality. While having part of the plot in the orange or red regions is not preferable, sequences can still pass the quality check if this is the case, as in our example. When the lower quartile for any position is less than 10 or the median is less than 25, the module will give a warning. When the lower quartile for any position is less than 5 or the median is less than 20, the sequence will fail this quality check.
+Per base sequence quality shows the quality of the sequences in your file at every base position from 1 to, in our case, 150. The quality score is a Phred score, which is explained below. The per base sequence quality plot displays this information using box and whisker plots to give a sense of how much variation there was among the reads. Ideally we would want the entire plot to be contained within the green region; this would be considered very good quality. While having part of the plot in the orange or red regions is not preferable, sequences can still pass the quality check if this is the case, as in our example. When the lower quartile for any position is less than 10 or the median is less than 25, the module will give a warning. When the lower quartile for any position is less than 5 or the median is less than 20, the sequence will fail this quality check.
+
+[*PHRED SCORES*](https://en.wikipedia.org/wiki/Phred_quality_score): A Phred score of 30 indicates an error rate of 1 base in 1000, or an accuracy of 99.9%, while a Phred score of 40 indicates an error rate of 1 base in 10,000, or an accuracy of 99.99%. Sequences will yield a warning for this module if there is an error rate of 0.2% or higher (Phred score below 27). Sequences will fail this quality check if they have an error rate of 1% or higher (Phred score below 20.)
+In our example, the average quality per read is 37, which is very good. This represents an accuracy of 99.98%. 
+For the more visual learners among us, here is a graph demonstrating the relationship between Phred scores and error rate.
+![phred scores](/img/phred_scores.png)
 
 ###3: Per tile sequence quality
 ![per tile sequence quality](/img/per_tile_seq_quality.png)
@@ -145,10 +144,7 @@ Per tile sequence quality is a heatmap display of the flow cell quality by indiv
 ###4: Per sequence quality scores
 ![per sequence quality scores](/img/per_seq_qual.png)
 
-Per sequence quality scores represent the quality of each read. The y-axis is number of sequences, and the x-axis uses Phred scores, which are based on a logarithmic scale. A Phred score of 30 indicates an error rate of 1 base in 1000, or an accuracy of 99.9%, while a Phred score of 40 indicates an error rate of 1 base in 10,000, or an accuracy of 99.99%. Sequences will yield a warning for this module if there is an error rate of 0.2% or higher (Phred score below 27). Sequences will fail this quality check if they have an error rate of 1% or higher (Phred score below 20.)
-In our example, the average quality per read is 37, which is very good. This represents an accuracy of 99.98%. 
-For the more visual learners among us, here is a graph demonstrating the relationship between Phred scores and error rate.
-![phred scores](/img/phred_scores.png)
+Per sequence quality scores represent the quality of each read. The y-axis is number of sequences, and the x-axis uses Phred scores, 
 
 ###5: Per base sequence content
 ![per base sequence content](/img/per_base_seq_content.png)
