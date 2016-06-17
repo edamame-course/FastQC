@@ -155,9 +155,8 @@ Per base sequence content shows, for each position of each sequence, the base co
 ###6: Per sequence GC content
 ![per sequence GC content](/img/per_seq_GC_content.png)
 
-Per sequence GC content displays the GC content for all reads along with the "theoretical distribution" of GCs. The peak of the red line corresponds to the mean GC content for the sequences, while the peak of the blue line corresponds to the theoretical mean GC content. Your GC content should be normally distributed; shifts in the peak are to be expected since GC content varies between organisms, but anything other than a normal curve might be indicative of contamination. The sharp peak seen above is again due to the fact that we have enriched for a specific sequence, so we expect the majority to have about the same GC content.
-
-A warning is raised if sequences outside of the normal distribution comprise more than 15% of the total. A sample will fail if more than 20% of sequences are outside the normal distribution. Failures are usually due to contamination, frequently by adapter sequences.
+Per sequence GC content displays the GC content for all reads along with the "theoretical distribution" of GCs. The peak of the red line corresponds to the mean GC content for the sequences, while the peak of the blue line corresponds to the theoretical mean GC content. Your GC content should be normally distributed; shifts in the peak are to be expected since GC content varies between organisms, but anything other than a normal curve might be indicative of contamination. The sharp peak seen above is again due to the fact that we have enriched for a specific sequence, so we expect the majority to have about the same GC content. 
+A warning is raised if sequences outside of the normal distribution comprise more than 15% of the total. A sample will fail if more than 20% of sequences are outside the normal distribution. Failures are usually due to contamination (frequently by adapter sequences), or to the use of amplicons as we have done here. 
 
 ###7: Per base N content
 ![per base N content](/img/per_base_N_content.png)
@@ -180,7 +179,7 @@ The sequence duplication levels plot shows the number of times a sequence is dup
 If a certain sequence is calculated to represent more than 0.1% of the entire genome, it will be flagged as an overrepresented sequence and yield a warning for this module. The presence of sequences that represent more than 1% of the whole genome will result in a failure, as seen above.
 These overrepresented sequences are seen because we are looking at 16S data; if we did not see this many overrepresented sequences, there would be a serious problem. Another frequent source of "overrepresented sequences" is Illumina adapters, which is why it's a good idea to trim sequences before running FastQC.
 
-The program searches for possible matches to identified overrepresented sequences; although this search frequently returns "no hit", it is usually quite easy to identify the overrepresented sequences by doing a BLAST search.
+The program searches for possible matches to identified overrepresented sequences; although this search frequently returns "no hit" (as seen in our example), it is usually quite easy to identify the overrepresented sequences by doing a BLAST search.
 
 
 ###11: Adapter content
@@ -198,7 +197,7 @@ We have failed this module, again due to the fact that we are using 16S sequence
 In non-enriched reads, it is relatively common to see highly represented kmers near the beginning of a sequence if adapters are present.
 
 
-###For FastQC questions, check the [documentation](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/). Happy quality checking!
+###For additional FastQC questions, check the [documentation](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/). Happy quality checking!
 
 ***
 ##Help and other Resources
