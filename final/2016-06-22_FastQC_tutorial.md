@@ -168,7 +168,7 @@ We have failed this module, again due to the fact that we are using 16S sequence
 In non-enriched reads, it is relatively common to see highly represented kmers near the beginning of a sequence if adapters are present.
 
 ###Automation
-If we were to do quality checking manually, we would have to run FastQC on each of our 10,000 sequences individually. This is not something we want to do. We're going to discuss how to automate this process. 
+If we were to do quality checking manually, we would have to run FastQC on each of our 104 sample files individually. This is not something we want to do. We're going to discuss how to automate this process. 
 
 ```
 wget https://raw.githubusercontent.com/edamame-course/FastQC/master/Fastqc_automation.sh
