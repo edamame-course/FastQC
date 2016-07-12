@@ -55,12 +55,12 @@ A good sequencing center should return some information on how the sequencing we
 
 
 ##2. Acquiring and executing FastQC
-Now that we have an idea of the data we're working with, we'll use FastQC to check the quality. 
+Now that we have an idea of the data we're working with, we'll use FastQC to check the quality. But FastQC doesn't come pre-loaded on the EC2 instance! Never fear, we can install auxiliary software on the EC2. We'll navigate to the home directory for this install, then `wget` the appropriate file. 
 ```
 cd 
 wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.5.zip
 ```
-This will download a .zip file into the home directory. Let's unzip it.
+Now we have the program file in the home directory. Since it's all zipped up and currently unusable, let's unzip it.
 
 ```
 unzip fastqc_v0.11.5.zip
@@ -71,7 +71,7 @@ This will create a new directory called FastQC with all of the program files in 
 cd FastQC
 chmod 755 fastqc
 ```
-This has changed the permission so we can now execute the file. If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".
+Now we can execute the file. If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".
 
 We're ready to check the quality of our data! What do we need to do?
 * Navigate to the directory containing our fastq files
