@@ -91,7 +91,11 @@ head C01D01F_sub_fastqc/summary.txt
 This will show a summary of each quality checking module in the middle column, whether the file passed or failed this check in the left column, and the sequencing file name in the right column. This is useful if you want to quickly check on the results of many sequencing files at once. But since this is just a summary, there is still much more information to be gleaned from the results. Let's take a look at one of the html files to see what the full FastQC output looks like. 
 
 In order to do this, we're going to transfer the html file from the cloud computer to our local computers. We'll do this using ```scp```, which stands for "secure copy". 
-Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file from the first sequencing file to your desktop. 
+Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file from the first sequencing file to your desktop. The syntax of this command is similar to the `ssh` that we use to connect to the cloud computer, but in this case we also have to specify:
+*The exact path of the file on the cloud computer that we want to transfer
+*The exact path on the local computer where we want the file transferred to
+
+Here's what that looks like:
 ```
 scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/EDAMAME_16S/results/fastqc/C01D01F_sub_fastqc.html ~/Desktop
 ```
