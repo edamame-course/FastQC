@@ -114,6 +114,12 @@ Here's what that looks like:
 ```
 scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/EDAMAME_16S/results/fastqc/C01D01F_sub_fastqc.html ~/Desktop
 ```
+
+updated
+``` 
+scp -i ~/Downloads/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/EDAMAME_16S/Fastq/C01D01F_sub_fastqc.html ~/Desktop
+```
+
 If you execute the command above, this will transfer C01D01F_sub_fastqc.html to your desktop. Once the file has transferred successfully, double-click on the file and it should open in your browser.
 
 ##4. FastQC Results 
