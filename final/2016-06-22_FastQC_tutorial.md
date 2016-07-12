@@ -25,8 +25,9 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 The purpose of this tutorial is to get you thinking about the quality of the (Illumina) data that you get back from the sequencing facility. This is important because you don't want to waste your valuable time analyzing data that are terrible quality.
 The program we'll be using to check the quality of our Centralia data is called FastQC. Usually you would want to trim off the primers before using FastQC, but our sequencing facility already did the primer trimming for us. But before we start quality checking, we're going to look at the fastq files that we got back from the sequencing facility. 
 
-##1. What's in a Fastq file?
-First we'll need to start and connect to an Amazon EC2 instance like we [did yesterday](http://angus.readthedocs.io/en/2015/amazon/index.html). 
+##1. What's in a Fastq file?   
+* First we'll need to start and connect to an Amazon EC2 instance like we [did yesterday](http://angus.readthedocs.io/en/2015/amazon/index.html).  
+* This tutorial can be run using a t2.micro instance size.
 
 Once we are connected to the instance, we'll wget the Centralia data. 
 
@@ -111,13 +112,9 @@ Open a new terminal window on your computer (not the EC2 instance window). Using
 * The exact path on the local computer where we want the file transferred to
 
 Here's what that looks like:
-```
-scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/EDAMAME_16S/results/fastqc/C01D01F_sub_fastqc.html ~/Desktop
-```
 
-updated
 ``` 
-scp -i ~/Downloads/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/EDAMAME_16S/Fastq/C01D01F_sub_fastqc.html ~/Desktop
+scp -i ~/Downloads/YOUR_KEY.pem ubuntu@YOUR_PUBLIC_DNS.amazonaws.com:/home/ubuntu/EDAMAME_16S/Fastq/C01D01F_sub_fastqc.html ~/Desktop
 ```
 
 If you execute the command above, this will transfer C01D01F_sub_fastqc.html to your desktop. Once the file has transferred successfully, double-click on the file and it should open in your browser.
