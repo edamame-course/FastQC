@@ -73,10 +73,14 @@ chmod 755 fastqc
 ```
 Now we can execute the file. If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".
 
-Install java on the EC2
+Install java on the EC2, one line at a time
 ```
 sudo add-apt-repository ppa:webupd8team/java
+```
+```
 sudo apt-get update
+```
+```
 sudo apt-get install oracle-java7-installer
 ```
 
