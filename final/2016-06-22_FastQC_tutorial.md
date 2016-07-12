@@ -25,7 +25,7 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 The purpose of this tutorial is to get you thinking about the quality of the (Illumina) data that you get back from the sequencing facility. This is important because you don't want to waste your valuable time analyzing data that are terrible quality.
 The program we'll be using to check the quality of our Centralia data is called FastQC. Usually you would want to trim off the primers before using FastQC, but our sequencing facility already did the primer trimming for us. But before we start quality checking, we're going to look at the fastq files that we got back from the sequencing facility. 
 
-##What's in a Fastq file?
+##1. What's in a Fastq file?
 First we'll need to start and connect to an Amazon EC2 instance like we [did yesterday](http://angus.readthedocs.io/en/2015/amazon/index.html). 
 
 Once we are connected to the instance, we'll wget the Centralia data. 
