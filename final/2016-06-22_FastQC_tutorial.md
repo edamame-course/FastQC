@@ -84,12 +84,15 @@ ls C01D01F_sub_fastqc
 head C01D01F_sub_fastqc/summary.txt
 ```
 
-This will show a summary of each quality checking module in the middle column, whether the file passed or failed this check in the left column, and the sequencing file name in the right column. This is useful to quickly check on the results of many files at once. But since this is just a summary, there is still much more information to be gleaned from the results. Let's take a look at one of the html files to see what the full FastQC output looks like. 
+This will show a summary of each quality checking module in the middle column, whether the file passed or failed this check in the left column, and the sequencing file name in the right column. This is useful if you want to quickly check on the results of many sequencing files at once. But since this is just a summary, there is still much more information to be gleaned from the results. Let's take a look at one of the html files to see what the full FastQC output looks like. 
 
-Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file from the first sequencing file to your desktop. Then, double-click on the file and it should open in your browser.
+In order to do this, we're going to transfer the html file from the cloud computer to our local computers. We'll do this using ```scp```, which stands for "secure copy". 
+Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file from the first sequencing file to your desktop. 
 ```
 scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/EDAMAME_16S/results/fastqc/C01D01F_sub_fastqc.html ~/Desktop
 ```
+Once the file has transferred successfully, double-click on the file and it should open in your browser.
+
 
 On the left-hand side of the screen, there will be a summary of the analyses with some combination of green checkmarks, yellow exclamation points, and red Xs, depending on whether or not the sequences pass the quality check for each module.
 
