@@ -72,11 +72,11 @@ This has changed the permission so we can now execute the file. If you're intere
 
 We're ready to check the quality of our data!
 ```
-cd ~EDAMAME_16S/Fastq
+cd ~/EDAMAME_16S/Fastq
 ~/FastQC/fastqc C01D01F_sub.fastq
-EDIT HERE
+ls
 ```
-Here you will see that for the original fastq file, C01D01F_sub.fastq, there are two new files with the same naming convention but with the extensions `.fastqc.zip` and `fastqc.html`. Let's unzip this file and take a look. 
+If you look towards the top of the list of files in the Fastq directory, you will see that for the original fastq file, C01D01F_sub.fastq, there are two new files with the same naming convention but with the extensions `.fastqc.zip` and `fastqc.html`. Let's unzip this file and take a look. 
 
 ```
 unzip C01D01F_sub.fastq
