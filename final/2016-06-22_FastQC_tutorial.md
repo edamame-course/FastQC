@@ -54,7 +54,7 @@ Can you identify each of the above components in the first fastq file? (Use ```q
 A good sequencing center should return some information on how the sequencing went and the proprietary software they used to do some initial quality control of the raw data, and, potentially, information about de-multiplexing.  You can look at the info we got from the MSU Genomics Core [here](https://github.com/edamame-course/2015-tutorials/tree/master/demos/QCRawTags).
 
 
-##2. Running FastQC
+##2. Acquiring and executing FastQC
 Now that we have an idea of the data we're working with, we'll use FastQC to check the quality. 
 ```
 cd 
