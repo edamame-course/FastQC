@@ -76,11 +76,12 @@ cd ~/EDAMAME_16S/Fastq
 ~/FastQC/fastqc C01D01F_sub.fastq
 ls
 ```
-If you look towards the top of the list of files in the Fastq directory, you will see that for the original fastq file, C01D01F_sub.fastq, there are two new files with the same naming convention but with the extensions `.fastqc.zip` and `fastqc.html`. Let's unzip this file and take a look. 
+If you look towards the top of the list of files in the Fastq directory, you will see that for the original fastq file, C01D01F_sub.fastq, there are two new files with the same naming convention but with endings `.fastqc.zip` and `fastqc.html`. Let's unzip this file and take a look. 
 
 ```
-unzip C01D01F_sub.fastq
-EDIT HERE
+unzip C01D01F_sub_fastqc.zip
+ls C01D01F_sub_fastqc
+head C01D01F_sub_fastqc/summary.txt
 ```
 
 This will show a summary of each quality checking module in the middle column, whether the file passed or failed this check in the left column, and the sequencing file name in the right column. This is useful to quickly check on the results of many files at once. But since this is just a summary, there is still much more information to be gleaned from the results. Let's take a look at one of the html files to see what the full FastQC output looks like. 
