@@ -71,9 +71,9 @@ chmod 755 fastqc
 This has changed the permission so we can now execute the file. If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".
 
 We're ready to check the quality of our data! What do we need to do?
--Navigate to the directory containing our fastq files
--Execute the FastQC program on one of our files
--See what the output of FastQC is
+* Navigate to the directory containing our fastq files
+* Execute the FastQC program on one of our files
+* See what the output of FastQC is
 
 ```
 cd ~/EDAMAME_16S/Fastq
@@ -92,8 +92,8 @@ This will show a summary of each quality checking module in the middle column, w
 
 In order to do this, we're going to transfer the html file from the cloud computer to our local computers. We'll do this using ```scp```, which stands for "secure copy". 
 Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file from the first sequencing file to your desktop. The syntax of this command is similar to the `ssh` that we use to connect to the cloud computer, but in this case we also have to specify:
--The exact path of the file on the cloud computer that we want to transfer
--The exact path on the local computer where we want the file transferred to
+* The exact path of the file on the cloud computer that we want to transfer
+* The exact path on the local computer where we want the file transferred to
 
 Here's what that looks like:
 ```
