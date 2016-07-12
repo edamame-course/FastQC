@@ -207,7 +207,7 @@ We'll navigate to the home directory, grab an executable file, change the permis
 ```
 cd
 wget https://raw.githubusercontent.com/edamame-course/FastQC/master/Fastqc_automation.sh
-chmod 755
+chmod 755 Fastqc_automation.sh
 ./Fastqc_automation.sh
 ```
 This will take several minutes to run on all of the files. Once it finishes, we'll look at the output.
