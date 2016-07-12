@@ -70,13 +70,17 @@ chmod 755 fastqc
 ```
 This has changed the permission so we can now execute the file. If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".
 
-We're ready to check the quality of our data!
+We're ready to check the quality of our data! What do we need to do?
+*Navigate to the directory containing our fastq files
+*Execute the FastQC program on one of our files
+*See what the output of FastQC is
+
 ```
 cd ~/EDAMAME_16S/Fastq
 ~/FastQC/fastqc C01D01F_sub.fastq
 ls
 ```
-If you look towards the top of the list of files in the Fastq directory, you will see that for the original fastq file, C01D01F_sub.fastq, there are two new files with the same naming convention but with endings `.fastqc.zip` and `fastqc.html`. Let's unzip this file and take a look. 
+If you look towards the top of the list of files in the Fastq directory, you will see that for the original fastq file, C01D01F_sub.fastq, there are two new files with the same naming convention but with endings `fastqc.html` and `.fastqc.zip`. Let's unzip this file and take a look. 
 
 ```
 unzip C01D01F_sub_fastqc.zip
