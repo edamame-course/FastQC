@@ -22,8 +22,6 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 
 #Data quality checking with FastQC
 
-* Make sure you have java installed <br>
-
 The purpose of this tutorial is to get you thinking about the quality of the (Illumina) data that you get back from the sequencing facility. This is important because you don't want to waste your valuable time analyzing data that are terrible quality.
 The program we'll be using to check the quality of our Centralia data is called FastQC. Usually you would want to trim off the primers before using FastQC, but our sequencing facility already did the primer trimming for us. But before we start quality checking, we're going to look at the fastq files that we got back from the sequencing facility. 
 
@@ -74,6 +72,13 @@ cd FastQC
 chmod 755 fastqc
 ```
 Now we can execute the file. If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".
+
+Install java on the EC2
+```
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java7-installer
+```
 
 We're ready to check the quality of our data! What do we need to do?
 * Navigate to the directory containing our fastq files
