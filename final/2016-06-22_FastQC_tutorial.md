@@ -25,6 +25,7 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 The purpose of this tutorial is to get you thinking about the quality of the (Illumina) data that you get back from the sequencing facility. This is important because you don't want to waste your valuable time analyzing data that are terrible quality.
 The program we'll be using to check the quality of our Centralia data is called FastQC. Usually you would want to trim off the primers before using FastQC, but our sequencing facility already did the primer trimming for us. But before we start quality checking, we're going to look at the fastq files that we got back from the sequencing facility. 
 
+##What's in a Fastq file?
 First we'll need to start and connect to an Amazon EC2 instance like we [did yesterday](http://angus.readthedocs.io/en/2015/amazon/index.html). 
 
 Once we are connected to the instance, we'll wget the Centralia data. 
@@ -52,6 +53,8 @@ Can you identify each of the above components in the first fastq file? (Use ```q
 
 A good sequencing center should return some information on how the sequencing went and the proprietary software they used to do some initial quality control of the raw data, and, potentially, information about de-multiplexing.  You can look at the info we got from the MSU Genomics Core [here](https://github.com/edamame-course/2015-tutorials/tree/master/demos/QCRawTags).
 
+
+##Running FastQC
 Now that we have an idea of the data we're working with, we'll use FastQC to check the quality. 
 ```
 cd 
@@ -90,6 +93,7 @@ head C01D01F_sub_fastqc/summary.txt
 
 This will show a summary of each quality checking module in the middle column, whether the file passed or failed this check in the left column, and the sequencing file name in the right column. This is useful if you want to quickly check on the results of many sequencing files at once. But since this is just a summary, there is still much more information to be gleaned from the results. Let's take a look at one of the html files to see what the full FastQC output looks like. 
 
+##SCP
 In order to do this, we're going to transfer the html file from the cloud computer to our local computers. We'll do this using ```scp```, which stands for "secure copy". 
 Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file from the first sequencing file to your desktop. The syntax of this command is similar to the `ssh` that we use to connect to the cloud computer, but in this case we also have to specify:
 * The exact path of the file on the cloud computer that we want to transfer
@@ -99,9 +103,9 @@ Here's what that looks like:
 ```
 scp -i ~/Directory/YOURKEY.pem ubuntu@YOURINSTANCEID.amazonaws.com:/home/ubuntu/EDAMAME_16S/results/fastqc/C01D01F_sub_fastqc.html ~/Desktop
 ```
-Once the file has transferred successfully, double-click on the file and it should open in your browser.
+If you execute the command above, this will transfer C01D01F_sub_fastqc.html to your desktop. Once the file has transferred successfully, double-click on the file and it should open in your browser.
 
-
+##FastQC Results 
 On the left-hand side of the screen, there will be a summary of the analyses with some combination of green checkmarks, yellow exclamation points, and red Xs, depending on whether or not the sequences pass the quality check for each module.
 
 ###1: Basic Statistics
@@ -179,7 +183,7 @@ In a completely random library, any kmers would be expected to be seen about equ
 We have failed this module, again due to the fact that we are using 16S sequences. As with the overrepresented sequences, we are expecting to see well-represented kmers because of high sequence conservation in the 16S region.
 In non-enriched reads, it is relatively common to see highly represented kmers near the beginning of a sequence if adapters are present.
 
-###Automation
+##Automation
 If we were to do quality checking manually, we would have to run FastQC on each of our 104 sample files individually. This is not something we want to do. We're going to discuss how to automate this process. 
 
 ```
