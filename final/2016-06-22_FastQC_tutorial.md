@@ -185,21 +185,30 @@ In non-enriched reads, it is relatively common to see highly represented kmers n
 
 ##5. Automation
 If we were to do all of this quality checking manually, we would have to run FastQC on each of our 104 sample files individually. This is a time-consuming and repetitive task, so we're going to automate this process. 
+We'll navigate to the home directory, grab an executable file, change the permissions, and run it. 
 
 ```
+cd
 wget https://raw.githubusercontent.com/edamame-course/FastQC/master/Fastqc_automation.sh
+chmod 755
 ./Fastqc_automation.sh
-EDIT HERE
 ```
-FastQC has been run on all of our files. What did we just do?
+This will take several minutes to run on all of the files. Once it finishes, we'll look at the output.
+
+```
+cd EDAMAME_16S/results/fastqc
+ls
+```
+
+FastQC has been run on all of our files. How did we do this?
 We used a [shell script](https://en.wikipedia.org/wiki/Shell_script)! Open up the shell script and see if you can figure out what it's doing.
 
 ```
+cd 
 nano Fastqc_automation.sh
 ```
 
-Our shell script included a step to unzip all of the .zip files, which is why we also have a new directory with the same name as each fastq file. These directories contain the output of the quality checking, including a full report (fastqc_data.txt) and a shorter summary (summary.txt). Since our shell script also included a step to combine each individual summary into one big summary file, we can view a combined summary of the results that way.
-
+To look at an overall summary of our sequencing quality, we can look at the summary file our shell script created. 
 ```
 cd ~/EDAMAME_16S/results
 more fastqc_summaries.txt
