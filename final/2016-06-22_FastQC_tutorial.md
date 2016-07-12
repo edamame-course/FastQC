@@ -2,7 +2,7 @@
 Authored by Siobhan Cusack, with contributions from Ashley Shade and Jackson Sorensen for EDAMAME2016.
 
 **The shell script included in this tutorial is from [Data Carpentry](http://www.datacarpentry.org/2015-08-24-ISU/lessons/08-automating_a_workflow.html)**
-
+####Information in this tutorial is based on the FastQC manual which can be accessed [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/).
 [EDAMAME-2016 wiki](https://github.com/edamame-course/2016-tutorials/wiki)
 
 ***
@@ -22,14 +22,19 @@ EDAMAME tutorials have a CC-BY [license](https://github.com/edamame-course/2015-
 
 #Data quality checking with FastQC
 
+The purpose of this tutorial is to get you thinking about the quality of the (Illumina) data that you get back from the sequencing facility. This is important because you don't want to waste your valuable time analyzing data that are terrible quality! Poor quality can result from bubbles in the sequencing lane, degradation of your DNA, or the presence of primers/seqencing adapters, among other things. 
 
-####Information in this tutorial is based on the FastQC manual which can be accessed [here](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/).
+The program we'll be using to check the quality of our Centralia data is called FastQC. Usually you would want to trim off the primers before using FastQC, but our sequencing facility already did the primer trimming for us. But before we start quality checking, we're going to look at the fastq files that we got back from the sequencing facility. 
 
-FastQC is a relatively quick and non labor-intesive way to check the quality of your NGS data.  But first, we're going to actually look at the raw data.
+First we'll need to start and connect to an Amazon EC2 instance like we [did yesterday](https://github.com/edamame-course/2016-tutorials/wiki/Intro-to-the-shell-and-cloud-computing). 
 
-Connect to the QIIME 1.9.1 AMI (AMI ID= ami-1918ff72), and if you haven't done so already, download the data from the cloud (```wget https://s3.amazonaws.com/edamame/EDAMAME_16S.tar.gz```)
+Once we are connected to the instance, we'll wget the Centralia data. 
 
-Before starting, make sure the sequencing files (in the 16S "subsampled" directory) have the .fastq extension.
+```
+wget https://s3.amazonaws.com/edamame/EDAMAME_16S.tar.gz
+tar -zxvf EDAMAME_16S.tar.gz
+
+```
 
 Inspect the raw data files.  What do the guts of a fastq file look like?
 
@@ -48,7 +53,7 @@ Can you identify each of the above components in the first fastq file?
 
 A good sequencing center should return some information on how the sequencing went and the proprietary software they used to do some initial quality control of the raw data, and, potentially, information about de-multiplexing.  You can look at the info we got from the MSU Genomics Core [here](https://github.com/edamame-course/2015-tutorials/tree/master/demos/QCRawTags).
 
-Moving on to FastQC. Install FastQC from the home directory.
+Now that we have an idea of the data we're working with, we'll use FastQC to check the quality. 
 ```
 cd 
 wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.5.zip
@@ -66,52 +71,19 @@ chmod 755 fastqc
 ```
 This has changed the permission so we can now execute the file. If you're interested in the specifics of changing file permissions, there is a 10 second crash course [here](https://files.fosswire.com/2007/08/fwunixref.pdf) under the heading "File Permissions".
 
-Now we are going to use what is called a shell script to automate the FastQC workflow, rather than manually running the same commands over and over for each sequence file. This is a simple script, but it can be modified for more complex workflows. Shell scripts can save you a lot of time!
-
-First we will make a new file:
+We're ready to check the quality of our data!
 ```
-nano FastQC.sh
+cd ~EDAMAME_16S/Fastq
+~/FastQC/fastqc C01D01F_sub.fastq
+EDIT HERE
 ```
-Now copy and paste the following code into the FastQC.sh file:
-```
-cd ~/EDAMAME_16S/Fastq
-
-echo "Running fastqc..."
-~/FastQC/fastqc *.fastq
-mkdir -p ~/EDAMAME_16S/results/fastqc
-
-echo "saving..."
-mv *.zip ~/EDAMAME_16S/results/fastqc/
-mv *.html ~/EDAMAME_16S/results/fastqc/
-
-cd ~/EDAMAME_16S/results/fastqc/
-
-echo "Unzipping..."
-for zip in *.zip
-do
-  unzip $zip
-done
-
-echo "saving..."
-cat */summary.txt > ~/EDAMAME_16S/results/fastqc_summaries.txt
-```
-Exit and save the new file. We will have to change the permissions on this file as well so that we can run it. Then we can execute the file to run the now-automated workflow!
-```
-chmod 755 FastQC.sh
-bash FastQC.sh
-```
-Once this script finishes, let's navigate to the new results folder and investigate the output.
+Here you will see that for the original fastq file, C01D01F_sub.fastq, there are two new files with the same naming convention but with the extensions `.fastqc.zip` and `fastqc.html`. Let's unzip this file and take a look. 
 
 ```
-cd ../EDAMAME_16S/results/fastqc
-ls
+unzip C01D01F_sub.fastq
+EDIT HERE
 ```
-Here you will see that for each original fastq file, there are two new files with the extensions `.fastqc.zip` and `fastqc.html`. Our shell script included a step to unzip all of the .zip files, which is why we also have a new directory with the same name as each fastq file. These directories contain the output of the quality checking, including a full report (fastqc_data.txt) and a shorter summary (summary.txt). Since our shell script also included a step to combine each individual summary into one big summary file, we can view a combined summary of the results that way.
 
-```
-cd ~/EDAMAME_16S/results
-more fastqc_summaries.txt
-```
 This will show a summary of each quality checking module in the middle column, whether the file passed or failed this check in the left column, and the sequencing file name in the right column. This is useful to quickly check on the results of many files at once. But since this is just a summary, there is still much more information to be gleaned from the results. Let's take a look at one of the html files to see what the full FastQC output looks like. 
 
 Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file from the first sequencing file to your desktop. Then, double-click on the file and it should open in your browser.
@@ -195,6 +167,28 @@ This module searches for specific adapter sequences. A sequence that makes up mo
 In a completely random library, any kmers would be expected to be seen about equally in each position (from 1-150 in this case). Any kmers that are specifically enriched at a particular site are reported in this module. If a kmer is enriched at a specific site with a p-value of less than 0.01, a warning will be displayed. A failure for this module occurs if a kmer is enriched at a site with a p-value of less than 10^-5.
 We have failed this module, again due to the fact that we are using 16S sequences. As with the overrepresented sequences, we are expecting to see well-represented kmers because of high sequence conservation in the 16S region.
 In non-enriched reads, it is relatively common to see highly represented kmers near the beginning of a sequence if adapters are present.
+
+###Automation
+If we were to do quality checking manually, we would have to run FastQC on each of our 10,000 sequences individually. This is not something we want to do. We're going to discuss how to automate this process. 
+
+```
+wget https://raw.githubusercontent.com/edamame-course/FastQC/master/Fastqc_automation.sh
+./Fastqc_automation.sh
+EDIT HERE
+```
+FastQC has been run on all of our files. What did we just do?
+We used a [shell script](https://en.wikipedia.org/wiki/Shell_script)! Open up the shell script and see if you can figure out what it's doing.
+
+```
+nano Fastqc_automation.sh
+```
+
+Our shell script included a step to unzip all of the .zip files, which is why we also have a new directory with the same name as each fastq file. These directories contain the output of the quality checking, including a full report (fastqc_data.txt) and a shorter summary (summary.txt). Since our shell script also included a step to combine each individual summary into one big summary file, we can view a combined summary of the results that way.
+
+```
+cd ~/EDAMAME_16S/results
+more fastqc_summaries.txt
+```
 
 
 ###For additional FastQC questions, check the [documentation](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/). Happy quality checking!
