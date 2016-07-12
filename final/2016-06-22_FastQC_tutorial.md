@@ -91,10 +91,10 @@ ls C01D01F_sub_fastqc
 head C01D01F_sub_fastqc/summary.txt
 ```
 
-This will show a summary of each quality checking module in the middle column, whether the file passed or failed this check in the left column, and the sequencing file name in the right column. This is useful if you want to quickly check on the results of many sequencing files at once. But since this is just a summary, there is still much more information to be gleaned from the results. Let's take a look at one of the html files to see what the full FastQC output looks like. 
+This will show a summary of each quality checking module in the middle column, whether the file passed or failed this check in the left column, and the sequencing file name in the right column. This is useful if you want to quickly check on the results of many sequencing files at once. But since this is just a summary, there is still much more information to be gleaned from the results. Let's take a look at the html file to see what the full FastQC output looks like. 
 
 ##3. SCP
-In order to do this, we're going to transfer the html file from the cloud computer to our local computers. We'll do this using ```scp```, which stands for "secure copy". 
+In order to do this, we're going to transfer the html file from the cloud computer to our local computer. We'll do this using ```scp```, which stands for "secure copy". 
 Open a new terminal window on your computer (not the EC2 instance window). Using scp, transfer the html file from the first sequencing file to your desktop. The syntax of this command is similar to the `ssh` that we use to connect to the cloud computer, but in this case we also have to specify:
 * The exact path of the file on the cloud computer that we want to transfer
 * The exact path on the local computer where we want the file transferred to
@@ -184,7 +184,7 @@ We have failed this module, again due to the fact that we are using 16S sequence
 In non-enriched reads, it is relatively common to see highly represented kmers near the beginning of a sequence if adapters are present.
 
 ##5. Automation
-If we were to do quality checking manually, we would have to run FastQC on each of our 104 sample files individually. This is a time-consuming and repetitive task, so we're going to discuss how to automate this process. 
+If we were to do all of this quality checking manually, we would have to run FastQC on each of our 104 sample files individually. This is a time-consuming and repetitive task, so we're going to automate this process. 
 
 ```
 wget https://raw.githubusercontent.com/edamame-course/FastQC/master/Fastqc_automation.sh
