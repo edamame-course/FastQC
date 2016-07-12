@@ -48,7 +48,7 @@ Each fastq has four lines:
 * 3. spacer (starts with +)   
 * 4. Quality: q score - alphanumeric (I is a score of 40, which is a perfect score) see [Wikipedia link](http://en.wikipedia.org/wiki/FASTQ_format) (no kidding!) for interpretation of alphanumeric Q score.
 
-Can you identify each of the above components in the first fastq file?
+Can you identify each of the above components in the first fastq file? (Use ```q``` to exit ```more```.
 
 A good sequencing center should return some information on how the sequencing went and the proprietary software they used to do some initial quality control of the raw data, and, potentially, information about de-multiplexing.  You can look at the info we got from the MSU Genomics Core [here](https://github.com/edamame-course/2015-tutorials/tree/master/demos/QCRawTags).
 
